@@ -1,167 +1,202 @@
 .timestamp-list {
-  margin-bottom: 1rem;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--bg-secondary);
 }
 
-.timestamp-list h3 {
-  margin-top: 0;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #303030;
-  font-size: 1.2rem;
+.timestamp-header {
+  padding: 10px 15px;
+  background-color: var(--bg-accent);
+  border-bottom: 1px solid #ddd;
+}
+
+.timestamp-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.timestamp-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.mode-toggle-btn {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.mode-toggle-btn.edit-mode {
+  background-color: #4caf50;
+  color: white;
+}
+
+.mode-toggle-btn.view-mode {
+  background-color: #2196f3;
+  color: white;
+}
+
+.category-filter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.category-select {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .no-timestamps {
+  padding: 20px;
   text-align: center;
-  color: #aaa;
-  padding: 1rem;
-  background-color: #1a1a1a;
-  border-radius: 4px;
+  color: var(--text-secondary);
 }
 
 .timestamp-list ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 300px;
-  overflow-y: auto;
 }
 
 .timestamp-item {
-  padding: 0.75rem;
-  border-bottom: 1px solid #303030;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  background-color: #1a1a1a;
-  border-radius: 4px;
-  margin-bottom: 0.5rem;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
   transition: background-color 0.2s;
 }
 
+.timestamp-item:last-child {
+  border-bottom: none;
+}
+
 .timestamp-item:hover {
-  background-color: #252525;
+  background-color: var(--bg-hover);
 }
 
 .timestamp-times {
   display: flex;
   align-items: center;
+  margin-bottom: 8px;
   flex-wrap: wrap;
-  gap: 0.25rem;
 }
 
 .time-control {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
 }
 
 .time-adjust-btn {
   width: 24px;
   height: 24px;
-  padding: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: #333;
-  color: white;
-  border-radius: 50%;
-  font-weight: bold;
-  border: none;
+  justify-content: center;
+  background-color: var(--bg-button);
+  color: var(--text-primary);
+  border: 1px solid #ddd;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  font-weight: bold;
+  margin: 0 2px;
 }
 
 .time-adjust-btn:hover {
-  background-color: #555;
+  background-color: var(--bg-button-hover);
 }
 
 .timestamp-time {
-  font-family: monospace;
-  font-size: 0.9rem;
-  background-color: #121212;
-  padding: 0.25rem 0.5rem;
+  padding: 4px 8px;
   border-radius: 4px;
+  background-color: var(--bg-primary);
+  margin: 0 5px;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.timestamp-time.clickable {
+  cursor: pointer;
+}
+
+.timestamp-time.clickable:hover {
+  background-color: var(--bg-hover);
 }
 
 .time-separator {
-  color: #3ea6ff;
-  font-weight: bold;
-  margin: 0 0.25rem;
+  margin: 0 5px;
+  color: var(--text-secondary);
 }
 
-.clickable {
+.timestamp-category-select {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  margin-left: auto;
   cursor: pointer;
-  color: #3ea6ff;
 }
 
-.clickable:hover {
-  text-decoration: underline;
+.timestamp-category-label {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  margin-left: auto;
+  font-size: 12px;
+}
+
+.delete-timestamp-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+  opacity: 0.7;
+}
+
+.delete-timestamp-btn:hover {
+  opacity: 1;
+}
+
+.play-segment-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
 }
 
 .timestamp-comment {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #303030;
+  padding: 8px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  background-color: #121212;
-  color: #fff;
-  transition: border-color 0.2s;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-.timestamp-comment:focus {
-  border-color: #3ea6ff;
-  outline: none;
-}
-
-.delete-timestamp-btn {
-  margin-left: auto;
-  background: none;
-  border: none;
-  color: #aaa;
-  cursor: pointer;
-  font-size: 1.2rem;
-  padding: 0.25rem;
-  transition: color 0.2s;
-}
-
-.delete-timestamp-btn:hover {
-  color: #f00;
-}
-
-
-/* Add these styles to the existing TimestampList.css */
-
-.timestamp-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.category-filter {
-  min-width: 120px;
-}
-
-.category-select {
-  padding: 0.5rem;
-  border: 1px solid #303030;
+.timestamp-comment-display {
+  padding: 8px;
+  background-color: var(--bg-primary);
   border-radius: 4px;
-  background-color: #121212;
-  color: #fff;
-  width: 100%;
+  color: var(--text-primary);
+  font-style: italic;
 }
 
-.timestamp-category-select {
-  padding: 0.25rem 0.5rem;
-  border: none;
+.time-edit-input input {
+  width: 80px;
+  padding: 4px;
+  border: 1px solid #2196f3;
   border-radius: 4px;
-  color: #000;
-  font-weight: bold;
-  font-size: 0.8rem;
-  cursor: pointer;
-  margin-left: 0.5rem;
-}
-
-.timestamp-category-select option {
-  background-color: #121212;
-  color: #fff;
+  font-family: monospace;
+  text-align: center;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
