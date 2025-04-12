@@ -1,0 +1,7 @@
+[build]
+  command = "CI= npm run build"
+  publish = "build"
+
+[build.environment]
+  BROWSER = "none"
+  PORT = "3000"
