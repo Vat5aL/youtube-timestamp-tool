@@ -1,0 +1,167 @@
+.timestamp-list {
+  margin-bottom: 1rem;
+}
+
+.timestamp-list h3 {
+  margin-top: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #303030;
+  font-size: 1.2rem;
+}
+
+.no-timestamps {
+  text-align: center;
+  color: #aaa;
+  padding: 1rem;
+  background-color: #1a1a1a;
+  border-radius: 4px;
+}
+
+.timestamp-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.timestamp-item {
+  padding: 0.75rem;
+  border-bottom: 1px solid #303030;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: #1a1a1a;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.timestamp-item:hover {
+  background-color: #252525;
+}
+
+.timestamp-times {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.time-control {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.time-adjust-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.time-adjust-btn:hover {
+  background-color: #555;
+}
+
+.timestamp-time {
+  font-family: monospace;
+  font-size: 0.9rem;
+  background-color: #121212;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.time-separator {
+  color: #3ea6ff;
+  font-weight: bold;
+  margin: 0 0.25rem;
+}
+
+.clickable {
+  cursor: pointer;
+  color: #3ea6ff;
+}
+
+.clickable:hover {
+  text-decoration: underline;
+}
+
+.timestamp-comment {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #303030;
+  border-radius: 4px;
+  background-color: #121212;
+  color: #fff;
+  transition: border-color 0.2s;
+}
+
+.timestamp-comment:focus {
+  border-color: #3ea6ff;
+  outline: none;
+}
+
+.delete-timestamp-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.25rem;
+  transition: color 0.2s;
+}
+
+.delete-timestamp-btn:hover {
+  color: #f00;
+}
+
+
+/* Add these styles to the existing TimestampList.css */
+
+.timestamp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.category-filter {
+  min-width: 120px;
+}
+
+.category-select {
+  padding: 0.5rem;
+  border: 1px solid #303030;
+  border-radius: 4px;
+  background-color: #121212;
+  color: #fff;
+  width: 100%;
+}
+
+.timestamp-category-select {
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: 4px;
+  color: #000;
+  font-weight: bold;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.timestamp-category-select option {
+  background-color: #121212;
+  color: #fff;
+}

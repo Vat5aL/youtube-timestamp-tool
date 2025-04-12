@@ -1,0 +1,130 @@
+.shortcut-settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.shortcut-settings-modal {
+  background-color: #202020;
+  border-radius: 8px;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  outline: none;
+}
+
+.shortcut-settings-modal h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #fff;
+  border-bottom: 1px solid #303030;
+  padding-bottom: 0.75rem;
+}
+
+.shortcut-list {
+  margin-bottom: 1.5rem;
+}
+
+.shortcut-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #303030;
+}
+
+.shortcut-action {
+  font-weight: bold;
+  color: #fff;
+}
+
+.shortcut-key {
+  background-color: #121212;
+  color: #fff;
+  border: 1px solid #303030;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  min-width: 100px;
+  text-align: center;
+  font-family: monospace;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.shortcut-key:hover {
+  background-color: #252525;
+}
+
+.shortcut-key.editing {
+  background-color: #3ea6ff;
+  color: #0f0f0f;
+  font-weight: bold;
+}
+
+.shortcut-settings-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #303030;
+}
+
+.reset-shortcuts-btn {
+  background-color: transparent;
+  color: #3ea6ff;
+  border: 1px solid #3ea6ff;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.reset-shortcuts-btn:hover {
+  background-color: rgba(62, 166, 255, 0.1);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.cancel-btn {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: #555;
+}
+
+.save-btn {
+  background-color: #3ea6ff;
+  color: #0f0f0f;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-btn:hover {
+  background-color: #65b8ff;
+}

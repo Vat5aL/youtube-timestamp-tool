@@ -1,0 +1,59 @@
+.progress-bar-container {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.progress-bar-background {
+  width: 100%;
+  height: 20px;
+  background-color: #303030;
+  position: relative;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #f00;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: width 0.1s linear;
+}
+
+.timestamp-marker {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.start-marker {
+  background-color: #f00;
+}
+
+.end-marker {
+  background-color: #0f0;
+}
+
+.single-marker {
+  background-color: #f00;
+}
+
+.timestamp-range {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: rgba(255, 255, 0, 0.3);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.current-time-display {
+  margin-top: 0.5rem;
+  font-family: monospace;
+  text-align: center;
+}

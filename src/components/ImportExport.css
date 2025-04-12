@@ -1,0 +1,54 @@
+.import-export {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #303030;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.buttons button {
+  flex: 1;
+  background-color: #3ea6ff;
+  color: #0f0f0f;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.buttons button:hover {
+  background-color: #65b8ff;
+}
+
+.import-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.import-container textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #303030;
+  border-radius: 4px;
+  background-color: #121212;
+  color: #fff;
+  resize: vertical;
+}
+
+.import-container button {
+  align-self: flex-end;
+  background-color: #3ea6ff;
+  color: #0f0f0f;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
