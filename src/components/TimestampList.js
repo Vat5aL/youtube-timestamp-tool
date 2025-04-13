@@ -10,6 +10,9 @@ const TimestampList = ({
   onUpdateCategory
 }) => {
   const [filter, setFilter] = useState('all');
+  const [editMode, setEditMode] = useState(true);
+  const [editingTime, setEditingTime] = useState(null);
+  const [editTimeValue, setEditTimeValue] = useState('');
   
   const categories = [
     { id: 'important', name: 'Important', color: '#ff5252' },
@@ -39,6 +42,45 @@ const TimestampList = ({
     ].join(':');
   };
 
+  // Improved time parsing function
+  const parseTimeToSeconds = (timeString) => {
+    const parts = timeString.split(':');
+    if (parts.length !== 3) return null;
+    
+    const hours = parseInt(parts[0], 10);
+    const minutes = parseInt(parts[1], 10);
+    const seconds = parseInt(parts[2], 10);
+    
+    if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) return null;
+    
+    return hours * 3600 + minutes * 60 + seconds;
+  };
+
+  // Fixed function to handle manual time edit
+  const handleTimeEdit = (timestampId, isStart, timeString) => {
+    const seconds = parseTimeToSeconds(timeString);
+    if (seconds !== null) {
+      // Calculate the difference and use the existing onUpdateTime function
+      const timestamp = timestamps.find(t => t.id === timestampId);
+      if (timestamp) {
+        const currentTime = isStart ? timestamp.startTime : timestamp.endTime;
+        const diff = seconds - currentTime;
+        onUpdateTime(timestampId, isStart, diff);
+      }
+    }
+    setEditingTime(null);
+  };
+
+  // Start editing a timestamp
+  const startEditingTime = (timestampId, isStart) => {
+    const timestamp = timestamps.find(t => t.id === timestampId);
+    if (timestamp) {
+      const time = isStart ? timestamp.startTime : timestamp.endTime;
+      setEditTimeValue(formatTime(time));
+      setEditingTime(`${timestampId}-${isStart ? 'start' : 'end'}`);
+    }
+  };
+
   // Filter timestamps based on selected category
   const filteredTimestamps = filter === 'all' 
     ? timestamps 
@@ -49,17 +91,26 @@ const TimestampList = ({
       <div className="timestamp-header">
         <h3>Timestamps</h3>
         
-        <div className="category-filter">
-          <select 
-            value={filter} 
-            onChange={(e) => setFilter(e.target.value)}
-            className="category-select"
+        <div className="header-controls">
+          <button 
+            className={`mode-toggle-btn ${editMode ? 'edit-mode' : 'view-mode'}`}
+            onClick={() => setEditMode(!editMode)}
           >
-            <option value="all">All Categories</option>
-            {categories.map(cat => (
-              <option key={cat.id} value={cat.id}>{cat.name}</option>
-            ))}
-          </select>
+            {editMode ? 'View Mode' : 'Edit Mode'}
+          </button>
+          
+          <div className="category-filter">
+            <select 
+              value={filter} 
+              onChange={(e) => setFilter(e.target.value)}
+              className="category-select"
+            >
+              <option value="all">All Categories</option>
+              {categories.map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
       
@@ -74,29 +125,55 @@ const TimestampList = ({
               <div className="timestamp-times">
                 {/* Start time controls */}
                 <div className="time-control">
-                  <button 
-                    className="time-adjust-btn"
-                    onClick={() => onUpdateTime(timestamp.id, true, -1)}
-                    title="Decrease by 1 second"
-                  >
-                    -
-                  </button>
+                  {editMode && (
+                    <button 
+                      className="time-adjust-btn"
+                      onClick={() => onUpdateTime(timestamp.id, true, -1)}
+                      title="Decrease by 1 second"
+                    >
+                      -
+                    </button>
+                  )}
                   
-                  <span 
-                    className="timestamp-time clickable"
-                    onClick={() => onJumpToTime(timestamp.startTime)}
-                    title="Jump to this time"
-                  >
-                    {formatTime(timestamp.startTime)}
-                  </span>
+                  {editingTime === `${timestamp.id}-start` ? (
+                    <input
+                      type="text"
+                      className="time-edit-input"
+                      value={editTimeValue}
+                      onChange={(e) => setEditTimeValue(e.target.value)}
+                      onBlur={() => handleTimeEdit(timestamp.id, true, editTimeValue)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          handleTimeEdit(timestamp.id, true, editTimeValue);
+                        }
+                      }}
+                      autoFocus
+                    />
+                  ) : (
+                    <span 
+                      className="timestamp-time clickable"
+                      onClick={() => {
+                        if (editMode) {
+                          startEditingTime(timestamp.id, true);
+                        } else {
+                          onJumpToTime(timestamp.startTime);
+                        }
+                      }}
+                      title={editMode ? "Click to edit time" : "Jump to this time"}
+                    >
+                      {formatTime(timestamp.startTime)}
+                    </span>
+                  )}
                   
-                  <button 
-                    className="time-adjust-btn"
-                    onClick={() => onUpdateTime(timestamp.id, true, 1)}
-                    title="Increase by 1 second"
-                  >
-                    +
-                  </button>
+                  {editMode && (
+                    <button 
+                      className="time-adjust-btn"
+                      onClick={() => onUpdateTime(timestamp.id, true, 1)}
+                      title="Increase by 1 second"
+                    >
+                      +
+                    </button>
+                  )}
                 </div>
                 
                 {/* Arrow between times */}
@@ -107,54 +184,68 @@ const TimestampList = ({
                 {/* End time controls (if exists) */}
                 {timestamp.endTime !== null && (
                   <div className="time-control">
-                    <button 
-                      className="time-adjust-btn"
-                      onClick={() => onUpdateTime(timestamp.id, false, -1)}
-                      title="Decrease by 1 second"
-                    >
-                      -
-                    </button>
+                    {editMode && (
+                      <button 
+                        className="time-adjust-btn"
+                        onClick={() => onUpdateTime(timestamp.id, false, -1)}
+                        title="Decrease by 1 second"
+                      >
+                        -
+                      </button>
+                    )}
                     
-                    <span 
-                      className="timestamp-time clickable"
-                      onClick={() => onJumpToTime(timestamp.endTime)}
-                      title="Jump to this time"
-                    >
-                      {formatTime(timestamp.endTime)}
-                    </span>
+                    {editingTime === `${timestamp.id}-end` ? (
+                      <input
+                        type="text"
+                        className="time-edit-input"
+                        value={editTimeValue}
+                        onChange={(e) => setEditTimeValue(e.target.value)}
+                        onBlur={() => handleTimeEdit(timestamp.id, false, editTimeValue)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            handleTimeEdit(timestamp.id, false, editTimeValue);
+                          }
+                        }}
+                        autoFocus
+                      />
+                    ) : (
+                      <span 
+                        className="timestamp-time clickable"
+                        onClick={() => {
+                          if (editMode) {
+                            startEditingTime(timestamp.id, false);
+                          } else {
+                            onJumpToTime(timestamp.endTime);
+                          }
+                        }}
+                        title={editMode ? "Click to edit time" : "Jump to this time"}
+                      >
+                        {formatTime(timestamp.endTime)}
+                      </span>
+                    )}
                     
-                    <button 
-                      className="time-adjust-btn"
-                      onClick={() => onUpdateTime(timestamp.id, false, 1)}
-                      title="Increase by 1 second"
-                    >
-                      +
-                    </button>
+                    {editMode && (
+                      <button 
+                        className="time-adjust-btn"
+                        onClick={() => onUpdateTime(timestamp.id, false, 1)}
+                        title="Increase by 1 second"
+                      >
+                        +
+                      </button>
+                    )}
                   </div>
                 )}
                 
-                {/* Category selector */}
-                <select
-                  className="timestamp-category-select"
-                  value={timestamp.category || 'other'}
-                  onChange={(e) => onUpdateCategory(timestamp.id, e.target.value)}
-                  style={{
-                    backgroundColor: findCategory(timestamp.category || 'other').color,
-                  }}
-                >
-                  {categories.map(cat => (
-                    <option key={cat.id} value={cat.id}>{cat.name}</option>
-                  ))}
-                </select>
-                
-                {/* Delete button */}
-                <button 
-                  className="delete-timestamp-btn"
-                  onClick={() => onDeleteTimestamp(timestamp.id)}
-                  title="Delete timestamp"
-                >
-                  🗑️
-                </button>
+                {/* Only show delete button in edit mode */}
+                {editMode && (
+                  <button 
+                    className="delete-timestamp-btn"
+                    onClick={() => onDeleteTimestamp(timestamp.id)}
+                    title="Delete timestamp"
+                  >
+                    🗑️
+                  </button>
+                )}
               </div>
               
               <input
@@ -163,6 +254,7 @@ const TimestampList = ({
                 value={timestamp.comment}
                 onChange={(e) => onUpdateComment(timestamp.id, e.target.value)}
                 placeholder="Add comment"
+                readOnly={!editMode}
               />
             </li>
           ))}
