@@ -9,7 +9,9 @@ import KeyboardShortcuts from './components/KeyboardShortcuts';
 import HelpModal from './components/HelpModal';
 import VideoDownloader from './components/VideoDownloader';
 import ThumbnailGenerator from './components/ThumbnailGenerator';
-import PlaylistCreator from './components/PlaylistCreator';
+// Remove these imports
+// import PlaylistCreator from './components/PlaylistCreator';
+// import AIFeatures from './components/AIFeatures';
 import ThemeToggle from './components/ThemeToggle';
 import KeyboardShortcutSettings from './components/KeyboardShortcutSettings';
 
@@ -24,6 +26,8 @@ function App() {
   const [helpModalOpen, setHelpModalOpen] = useState(false);
   const [theme, setTheme] = useState('dark');
   const [shortcutSettingsOpen, setShortcutSettingsOpen] = useState(false);
+  // Add videoTitle state
+  const [videoTitle, setVideoTitle] = useState('');
   const [customShortcuts, setCustomShortcuts] = useState({
     addTimestamp: 't',
     addEndTimestamp: 'e',
@@ -62,9 +66,16 @@ function App() {
   };
 
   // Handle player ready event
+  // Update handlePlayerReady to also get the video title
   const handlePlayerReady = (ytPlayer) => {
     setPlayer(ytPlayer);
     setDuration(ytPlayer.getDuration());
+    // Try to get video title if available
+    try {
+      setVideoTitle(ytPlayer.getVideoData().title);
+    } catch (err) {
+      console.log('Could not get video title');
+    }
   };
 
   // Handle URL change
@@ -181,17 +192,27 @@ function App() {
     localStorage.setItem('customShortcuts', JSON.stringify(newShortcuts));
   };
 
+  // Add this function to handle adding multiple timestamps at once
+  const handleAddMultipleTimestamps = (newTimestamps) => {
+    setTimestamps(prevTimestamps => [...prevTimestamps, ...newTimestamps]);
+  };
+
   return (
-    <div className={`app ${theme}`}>
+    <div className={`app ${theme === 'dark' ? 'dark-mode' : 'light-mode'}`}>
       <KeyboardShortcuts
         player={player}
         onAddTimestamp={() => addTimestamp('')}
         onAddEndTimestamp={addEndTimestamp}
-        isInputFocused={isInputFocused}
+        isPlaying={isPlaying}
         customShortcuts={customShortcuts}
+        isInputFocused={isInputFocused}
       />
       
       <div className="app-header-controls">
+        <div className="app-branding">
+          <h1 className="app-title">TimeClips</h1>
+          <span className="app-credits">by Vat5aL</span>
+        </div>
         <ThemeToggle theme={theme} onToggle={toggleTheme} />
         <button 
           className="shortcut-settings-btn"
@@ -266,10 +287,23 @@ function App() {
             timestamps={timestamps}
           />
           
+          {/* Remove these components
           <PlaylistCreator
             timestamps={timestamps}
             videoId={videoId}
             player={player}
+          />
+          
+          <AIFeatures 
+            videoId={videoId}
+            videoTitle={videoTitle}
+            onAddTimestamps={handleAddMultipleTimestamps}
+          />
+          */}
+          
+          <ThemeToggle 
+            theme={theme} 
+            onToggle={toggleTheme} 
           />
         </div>
       </main>
@@ -285,6 +319,18 @@ function App() {
         shortcuts={customShortcuts}
         onUpdateShortcuts={updateShortcuts}
       />
+      
+      {/* Remove this component
+      <AIFeatures 
+        videoId={videoId}
+        videoTitle={videoTitle}
+        onAddTimestamps={handleAddMultipleTimestamps}
+      />
+      */}
+      
+      <div className="timestamps-section">
+        {/* ... existing TimestampList component ... */}
+      </div>
     </div>
   );
 }
