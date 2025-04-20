@@ -49,8 +49,8 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 1rem;
-  background-color: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-color);
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333;
 }
 
 .app-branding {
@@ -62,14 +62,12 @@ body {
 .app-title {
   margin: 0;
   font-size: 1.5rem;
-  color: var(--accent-color);
-  font-weight: bold;
+  color: #3ea6ff;
 }
 
 .app-credits {
   font-size: 0.8rem;
-  color: var(--text-secondary);
-  font-style: italic;
+  color: #aaa;
 }
 
 .shortcut-settings-btn {
